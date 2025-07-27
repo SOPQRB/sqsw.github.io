@@ -1,11 +1,13 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pinkoc</title>
+    <title>Pinkoc - 首页</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* 所有页面共享的样式 */
         * {
             margin: 0;
             padding: 0;
@@ -72,7 +74,7 @@
             transition: all 0.3s ease;
         }
         
-        nav ul li a:hover {
+        nav ul li a:hover, nav ul li a.active {
             background: rgba(255, 255, 255, 0.1);
             transform: translateY(-3px);
         }
@@ -411,6 +413,33 @@
             transform: translateY(-5px);
         }
         
+        /* 页面内容样式 */
+        .page-content {
+            padding: 50px 0;
+            min-height: 60vh;
+        }
+        
+        .content-card {
+            background: rgba(30, 30, 46, 0.7);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .content-card h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #fad0c4;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+        }
+        
+        .content-card p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+        
         @media (max-width: 768px) {
             header {
                 flex-direction: column;
@@ -420,10 +449,11 @@
             nav ul {
                 margin-top: 20px;
                 justify-content: center;
+                flex-wrap: wrap;
             }
             
             nav ul li {
-                margin: 0 10px;
+                margin: 5px;
             }
             
             .hero {
@@ -439,6 +469,10 @@
             .hero-text p {
                 margin: 0 auto 30px;
             }
+            
+            .content-card {
+                padding: 20px;
+            }
         }
     </style>
 </head>
@@ -451,11 +485,11 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="#"><i class="fas fa-home"></i> 首页</a></li>
-                    <li><a href="#"><i class="fas fa-info-circle"></i> 关于</a></li>
-                    <li><a href="#"><i class="fas fa-users"></i> 社区</a></li>
-                    <li><a href="#"><i class="fas fa-cogs"></i> 规则</a></li>
-                    <li><a href="#"><i class="fas fa-headset"></i> 支持</a></li>
+                    <li><a href="index.html" class="active"><i class="fas fa-home"></i> 首页</a></li>
+                    <li><a href="about.html"><i class="fas fa-info-circle"></i> 关于</a></li>
+                    <li><a href="community.html"><i class="fas fa-users"></i> 社区</a></li>
+                    <li><a href="rules.html"><i class="fas fa-cogs"></i> 规则</a></li>
+                    <li><a href="support.html"><i class="fas fa-headset"></i> 支持</a></li>
                 </ul>
             </nav>
         </header>
@@ -552,10 +586,10 @@
                     <div class="download-option" onclick="window.open('https://wwrv.lanzouu.com/b00zxxtoxe', '_blank')">
                         <i class="fas fa-cloud"></i>
                         <h4>蓝奏云</h4>
-                        <p>无需登录快速下载，提取码1145</p>
+                        <p>无需登录快速下载</p>
                     </div>
                     <div class="download-option" onclick="window.open('https://mcapks.net', '_blank')">
-                        <i class="fab fa-be"></i>
+                        <i class="fab fa-baidu"></i>
                         <h4>基岩版下载</h4>
                         <p>🐔跳转到MCAPKS下载手🐔基岩版</p>
                     </div>
@@ -581,7 +615,7 @@
             </div>
             <div class="modal-body">
                 <div class="server-details">
-                    <h4>服务器IP</h4>
+                    <h4>服务器连接信息</h4>
                     
                     <div class="detail-item">
                         <div class="detail-label">服务器地址</div>
@@ -589,23 +623,27 @@
                         <button class="copy-btn" onclick="copyToClipboard('serverAddress')">
                             <i class="fas fa-copy"></i> 复制地址
                         </button>
-                        <div class="copied-notice" id="addressCopied">× 未复制到剪贴板</div>
+                        <div class="copied-notice" id="addressCopied">✓ 已复制到剪贴板</div>
                     </div>
                     
                     <div class="detail-item">
-                        <div class="detail-label">不支持版本</div>
+                        <div class="detail-label">支持版本</div>
                         <div class="detail-value">1.13 - 1.21.6</div>
-                        <div class="detail-value">基岩版 : 1.21.70 - 1.21.92</div>
                     </div>
                     
                     <div class="detail-item">
                         <div class="detail-label">端口</div>
-                        <div class="detail-value">18608</div>
+                        <div class="detail-value">25565 (默认)</div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-label">在线状态</div>
+                        <div class="detail-value" style="color: #4ade80;">在线 <i class="fas fa-circle"></i></div>
                     </div>
                     
                     <div class="detail-item">
                         <p style="margin-top: 20px; color: #fad0c4;">
-                            <i class="fas fa-exclamation-circle"></i> 提示：请使用不支持版本进入服务器，并且时间并没有被静止
+                            <i class="fas fa-exclamation-circle"></i> 提示：请使用支持版本进入服务器
                         </p>
                     </div>
                 </div>
@@ -615,12 +653,20 @@
 
     <footer>
         <div class="container">
-            <p>© 2025 Pinkoc 服务器 | 打造最辣🐔的Minecraft服务器</p>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-qq"></i></a>
+                <a href="#"><i class="fab fa-weixin"></i></a>
+                <a href="#"><i class="fab fa-discord"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-bilibili"></i></a>
+            </div>
+            <p>© 2025 Pinkoc Minecraft 服务器 | 打造最辣🐔的Minecraft服务器</p>
             <p style="margin-top: 10px; font-size: 0.9rem; color: #aaa;">Minecraft 是 Mojang Synergies AB 的商标，本网站与其无关联</p>
         </div>
     </footer>
 
     <script>
+        // 下载模态框控制
         const downloadBtn = document.getElementById('downloadBtn');
         const downloadModal = document.getElementById('downloadModal');
         const closeDownloadModal = document.getElementById('closeDownloadModal');
@@ -634,6 +680,7 @@
             downloadModal.style.display = 'none';
         });
         
+        // 加入服务器模态框控制
         const joinBtn = document.getElementById('joinBtn');
         const joinModal = document.getElementById('joinModal');
         const closeJoinModal = document.getElementById('closeJoinModal');
@@ -647,6 +694,7 @@
             joinModal.style.display = 'none';
         });
         
+        // 点击模态框外部关闭
         window.addEventListener('click', function(e) {
             if (e.target === downloadModal) {
                 downloadModal.style.display = 'none';
@@ -656,6 +704,7 @@
             }
         });
         
+        // 复制到剪贴板功能
         function copyToClipboard(elementId) {
             const element = document.getElementById(elementId);
             const text = element.innerText;
@@ -667,6 +716,7 @@
             document.execCommand('copy');
             document.body.removeChild(textArea);
             
+            // 显示复制成功提示
             const notice = document.getElementById(elementId + 'Copied');
             if (notice) {
                 notice.style.display = 'block';

@@ -1,11 +1,13 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pinkoc - Minecraft服务器</title>
+    <title>Pinkoc - 首页</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* 所有页面共享的样式 */
         * {
             margin: 0;
             padding: 0;
@@ -72,55 +74,11 @@
             transition: all 0.3s ease;
         }
         
-        nav ul li a:hover {
+        nav ul li a:hover, nav ul li a.active {
             background: rgba(255, 255, 255, 0.1);
             transform: translateY(-3px);
         }
         
-        /* 顶部特殊按钮 - 在导航栏下方 */
-        .top-special-button {
-            text-align: center;
-            margin: 15px 0;
-            animation: pulse 2s infinite;
-        }
-        
-        .special-btn {
-            display: inline-block;
-            background: linear-gradient(45deg, #ff0000, #ff7300);
-            color: white;
-            font-weight: bold;
-            font-size: 1.2rem;
-            padding: 12px 30px;
-            border-radius: 30px;
-            text-decoration: none;
-            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
-            transition: all 0.3s ease;
-            border: 2px solid white;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .special-btn:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 8px 25px rgba(255, 0, 0, 0.6);
-        }
-        
-        .special-btn:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.5s;
-        }
-        
-        .special-btn:hover:before {
-            left: 100%;
-        }
-        
-        /* 英雄区域 */
         .hero {
             display: flex;
             align-items: center;
@@ -172,7 +130,6 @@
             flex: 1;
             min-width: 300px;
             text-align: center;
-            position: relative;
         }
         
         .hero-image img {
@@ -182,17 +139,6 @@
             border: 3px solid rgba(255, 255, 255, 0.1);
         }
         
-        /* 英雄区域内的特殊按钮 */
-        .hero-special-button {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
-            animation: float 3s ease-in-out infinite;
-        }
-        
-        /* 特征区域 */
         .features {
             padding: 80px 0;
             text-align: center;
@@ -286,55 +232,214 @@
             color: #ffffff;
         }
         
-        /* 页脚上方的特殊按钮 */
-        .bottom-special-button {
-            text-align: center;
-            margin: 40px 0 20px;
-            padding: 20px;
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, #1a2a6c, #2a4d69);
+            width: 90%;
+            max-width: 600px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            animation: modalAppear 0.5s ease;
+        }
+        
+        @keyframes modalAppear {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .modal-header {
             background: rgba(0, 0, 0, 0.3);
-            border-radius: 15px;
-        }
-        
-        /* 动画效果 */
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(255, 115, 0, 0.7);
-            }
-            70% {
-                transform: scale(1.02);
-                box-shadow: 0 0 0 15px rgba(255, 115, 0, 0);
-            }
-            100% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(255, 115, 0, 0);
-            }
-        }
-        
-        @keyframes float {
-            0% {
-                transform: translateX(-50%) translateY(0px);
-            }
-            50% {
-                transform: translateX(-50%) translateY(-15px);
-            }
-            100% {
-                transform: translateX(-50%) translateY(0px);
-            }
-        }
-        
-        /* 占位链接提示 */
-        .link-placeholder {
-            text-align: center;
             padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .modal-header h3 {
+            font-size: 1.8rem;
+            color: #ffffff;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #e0e0e0;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            color: #ff9a9e;
+            transform: rotate(90deg);
+        }
+        
+        .modal-body {
+            padding: 30px;
+        }
+        
+        .download-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .download-option {
             background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
-            margin: 20px 0;
-            font-size: 0.9rem;
-            color: #ff9a9e;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
         
-        /* 响应式设计 */
+        .download-option:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+        
+        .download-option i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #fad0c4;
+        }
+        
+        .download-option h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+        
+        .download-option p {
+            font-size: 0.9rem;
+            color: #cccccc;
+        }
+        
+        /* 加入服务器信息样式 */
+        .server-details {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .server-details h4 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #fad0c4;
+        }
+        
+        .detail-item {
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        
+        .detail-label {
+            font-weight: bold;
+            color: #ff9a9e;
+            font-size: 1.1rem;
+        }
+        
+        .detail-value {
+            font-size: 1.4rem;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fad0c4;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .copied-notice {
+            color: #4ade80;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 40px;
+            border-top: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .social-icons {
+            margin: 20px 0;
+        }
+        
+        .social-icons a {
+            display: inline-block;
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            margin: 0 10px;
+            line-height: 45px;
+            color: #fad0c4;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            color: #1a1a2e;
+            transform: translateY(-5px);
+        }
+        
+        /* 页面内容样式 */
+        .page-content {
+            padding: 50px 0;
+            min-height: 60vh;
+        }
+        
+        .content-card {
+            background: rgba(30, 30, 46, 0.7);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .content-card h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #fad0c4;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+        }
+        
+        .content-card p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+        
         @media (max-width: 768px) {
             header {
                 flex-direction: column;
@@ -365,12 +470,8 @@
                 margin: 0 auto 30px;
             }
             
-            .hero-special-button {
-                position: relative;
-                bottom: auto;
-                left: auto;
-                transform: none;
-                margin-top: 20px;
+            .content-card {
+                padding: 20px;
             }
         }
     </style>
@@ -399,13 +500,6 @@
                 <p>加入我们充满辣🐔的Minecraft服务器！体验千篇一律的原版生存、永远都在开发的小游戏和充满小学生的玩家社区。高延迟，低稳定性！</p>
                 <a href="#" class="btn" id="downloadBtn"><i class="fas fa-download"></i> 下载客户端</a>
                 <a href="#" class="btn" id="joinBtn" style="background: linear-gradient(to right, #4b6cb7, #182848); margin-left: 15px;"><i class="fas fa-plug"></i> 立即加入</a>
-                
-                <!-- 新添加的网页版MC链接 -->
-                <div style="margin-top: 15px;">
-                    <a href="https://your-web-mc-url.com" class="btn" style="background: linear-gradient(to right, #6a3093, #a044ff);">
-                        <i class="fas fa-globe"></i> 网页版MC
-                    </a>
-                </div>
             </div>
             <div class="hero-image">
                 <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Minecraft Game Scene">
@@ -469,6 +563,94 @@
         </section>
     </div>
 
+    <!-- 下载模态框 -->
+    <div class="modal" id="downloadModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>下载客户端</h3>
+                <button class="close-modal" id="closeDownloadModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="text-align: center; margin-bottom: 20px;">请选择您喜欢的下载方式：</p>
+                <div class="download-options">
+                    <div class="download-option" onclick="window.open('https://fuckdamn.bitch.gay', '_blank')">
+                        <i class="fas fa-bolt"></i>
+                        <h4>直链下载</h4>
+                        <p>低速而且非常辣🐔，稳定性早就被查爆了🐔🐔🐔</p>
+                    </div>
+                    <div class="download-option" onclick="window.open('https://www.123865.com/s/azurTd-lRfb', '_blank')">
+                        <i class="fas fa-cloud-download-alt"></i>
+                        <h4>123网盘</h4>
+                        <p>不知如何评价</p>
+                    </div>
+                    <div class="download-option" onclick="window.open('https://wwrv.lanzouu.com/b00zxxtoxe', '_blank')">
+                        <i class="fas fa-cloud"></i>
+                        <h4>蓝奏云</h4>
+                        <p>无需登录快速下载，提取码1145</p>
+                    </div>
+                    <div class="download-option" onclick="window.open('https://mcapks.net', '_blank')">
+                        <i class="fab fa-be"></i>
+                        <h4>基岩版下载</h4>
+                        <p>🐔跳转到MCAPKS下载手🐔基岩版</p>
+                    </div>
+                    <div class="download-option" onclick="window.open('https://share.weiyun.com/a6Hgu0Ck', '_blank')">
+                        <i class="fab fa-tencent-weibo"></i>
+                        <h4>腾讯微云</h4>
+                        <p>飞舞低速下载</p>
+                    </div>
+                </div>
+                <div style="margin-top: 30px; text-align: center; font-size: 0.9rem; color: #aaa;">
+                    <p><i class="fas fa-exclamation-triangle"></i> 注意：请根据您的网络环境选择最慢的下载方式，并且下载完后请在24小时内删除，资源仅供交流和学习使用。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 加入服务器模态框 -->
+    <div class="modal" id="joinModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>加入服务器</h3>
+                <button class="close-modal" id="closeJoinModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="server-details">
+                    <h4>服务器连接信息</h4>
+                    
+                    <div class="detail-item">
+                        <div class="detail-label">服务器地址</div>
+                        <div class="detail-value" id="serverAddress">mc.pinkoc.top</div>
+                        <button class="copy-btn" onclick="copyToClipboard('serverAddress')">
+                            <i class="fas fa-copy"></i> 复制地址
+                        </button>
+                        <div class="copied-notice" id="addressCopied">✓ 已复制到剪贴板</div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-label">支持版本</div>
+                        <div class="detail-value">1.13 - 1.21.6</div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-label">端口</div>
+                        <div class="detail-value">25565 (默认)</div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-label">在线状态</div>
+                        <div class="detail-value" style="color: #4ade80;">在线 <i class="fas fa-circle"></i></div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <p style="margin-top: 20px; color: #fad0c4;">
+                            <i class="fas fa-exclamation-circle"></i> 提示：请使用支持版本进入服务器
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <div class="container">
             <div class="social-icons">
@@ -482,18 +664,67 @@
             <p style="margin-top: 10px; font-size: 0.9rem; color: #aaa;">Minecraft 是 Mojang Synergies AB 的商标，本网站与其无关联</p>
         </div>
     </footer>
-    
+
     <script>
-        // 添加一些交互效果
-        document.querySelectorAll('.special-btn').forEach(button => {
-            button.addEventListener('mouseenter', function() {
-                this.style.transform = 'scale(1.1)';
-            });
-            
-            button.addEventListener('mouseleave', function() {
-                this.style.transform = 'scale(1)';
-            });
+        // 下载模态框控制
+        const downloadBtn = document.getElementById('downloadBtn');
+        const downloadModal = document.getElementById('downloadModal');
+        const closeDownloadModal = document.getElementById('closeDownloadModal');
+        
+        downloadBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            downloadModal.style.display = 'flex';
         });
+        
+        closeDownloadModal.addEventListener('click', function() {
+            downloadModal.style.display = 'none';
+        });
+        
+        // 加入服务器模态框控制
+        const joinBtn = document.getElementById('joinBtn');
+        const joinModal = document.getElementById('joinModal');
+        const closeJoinModal = document.getElementById('closeJoinModal');
+        
+        joinBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            joinModal.style.display = 'flex';
+        });
+        
+        closeJoinModal.addEventListener('click', function() {
+            joinModal.style.display = 'none';
+        });
+        
+        // 点击模态框外部关闭
+        window.addEventListener('click', function(e) {
+            if (e.target === downloadModal) {
+                downloadModal.style.display = 'none';
+            }
+            if (e.target === joinModal) {
+                joinModal.style.display = 'none';
+            }
+        });
+        
+        // 复制到剪贴板功能
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.innerText;
+            
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            
+            // 显示复制成功提示
+            const notice = document.getElementById(elementId + 'Copied');
+            if (notice) {
+                notice.style.display = 'block';
+                setTimeout(() => {
+                    notice.style.display = 'none';
+                }, 2000);
+            }
+        }
     </script>
 </body>
 </html>

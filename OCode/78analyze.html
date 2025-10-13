@@ -28,6 +28,13 @@
       box-sizing: border-box
     }
 
+    .titletext {
+      padding-top: 5px;
+      text-align: left;
+      font-size: 16px;
+      line-height: 30px;
+    }
+
     html,
     body {
       height: 100%
@@ -278,6 +285,7 @@
     <div class="headline">
       <div class="title">78长度查询器</div>
       <div class="subtitle">让91大王来看看你的78</div>
+      <div class="subtitle">1.0.1已在25-10-13更新!</div>
     </div>
 
     <div class="section">
@@ -285,8 +293,10 @@
       <input class="input" placeholder="输入你的名字..." id="txt" />
 
       <div class="btn-wrap">
-        <button class="btn" id="go">分析78长度</button>
+        <button class="btn" id="go">分析78长度</button><br>
       </div>
+      <div class="headline">
+        <a href=analyze_ur_78_EN.html>English</a>
     </div>
 
     <div class="result-card" id="resultCard">
@@ -476,24 +486,24 @@
         // 正则匹配
         match: (input) => /^(GYQ|gyq)$/i.test(input),
         result: {
-          value: -50,
-          description: '？'
+          value: -5,
+          description: '一种奇妙的境界。'
         }
       },
       {
         // 正则匹配
         match: (input) => /^(FY|fy)$/i.test(input),
         result: {
-          value: -50,
-          description: '？'
+          value: -5,
+          description: '一种奇妙的境界。'
         }
       },
       {
         // 正则匹配
         match: (input) => /^(CCR|ccr)$/i.test(input),
         result: {
-          value: 9178,
-          description: '店铺倒闭了！'
+          value: 0,
+          description: '无法搜索！'
         }
       },
       {
@@ -502,6 +512,22 @@
         result: {
           value: -5000000,
           description: '招牌臭标子'
+        }
+      },
+      {
+        // 正则匹配
+        match: (input) => /^(WSQ|wsq)$/i.test(input),
+        result: {
+          value: 0,
+          description: '无法搜索'
+        }
+      },
+      {
+        // 正则匹配
+        match: (input) => /^(_Menf_|Menf)$/i.test(input),
+        result: {
+          value: 0,
+          description: '无法搜索'
         }
       },
       {
@@ -530,10 +556,18 @@
       },
       {
         // 正则匹配
+        match: (input) => /^(JYQ|jyq)$/i.test(input),
+        result: {
+          value: 0,
+          description: '无法搜索'
+        }
+      },
+      {
+        // 正则匹配
         match: (input) => /^(XJY|xjy)$/i.test(input),
         result: {
-          value: 2778,
-          description: 'XJY2778，这么强？'
+          value: 99999999999999,
+          description: '这么强？'
         }
       },
       {

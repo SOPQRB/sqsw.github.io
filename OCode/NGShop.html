@@ -1,0 +1,376 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>黑人马克的神秘商店</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .npc-float { animation: float 3s ease-in-out infinite; }
+        .item-hover:hover { transform: scale(1.05); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2); }
+        .dialog-enter { animation: dialogEnter 0.3s ease-out; }
+        @keyframes dialogEnter {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1516054575922-f0b8eeadec1a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="text-white min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-yellow-400 mb-2">黑人马克的神秘商店</h1>
+            <p class="text-gray-300 mb-4">在地铁站抢来的手机，在这里都能卖出好价钱</p>
+            <div class="flex justify-center items-center gap-4">
+                <div class="bg-yellow-800 px-4 py-2 rounded-lg">
+                    <span id="cash" class="font-bold">1000</span> <i class="fas fa-money-bill-wave text-yellow-300"></i>
+                </div>
+                <div class="bg-blue-800 px-4 py-2 rounded-lg">
+                    <span id="street-cred" class="font-bold">20</span> <i class="fas fa-user-secret text-blue-300"></i>
+                </div>
+            </div>
+        </header>
+
+        <main class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- 玩家库存 -->
+            <div class="bg-gray-800 rounded-xl p-6 shadow-lg">
+                <h2 class="text-2xl font-bold text-yellow-300 mb-4 border-b border-yellow-600 pb-2">你的赃物</h2>
+                <div id="player-inventory" class="grid grid-cols-2 gap-3">
+                    <!-- 物品将通过JS动态添加 -->
+                </div>
+                <button id="steal-btn" class="mt-4 w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg transition">
+                    <i class="fas fa-running mr-2"></i> 去地铁站抢手机
+                </button>
+            </div>
+
+            <!-- 商店区域 -->
+            <div class="bg-gray-800 rounded-xl p-6 shadow-lg flex flex-col">
+                <div class="flex-1">
+                    <div id="npc-container" class="text-center mb-6">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80" 
+                             alt="黑人商人马克" class="w-32 h-32 mx-auto rounded-full border-4 border-yellow-500 npc-float mb-4">
+                        <div id="npc-dialog" class="bg-gray-700 rounded-lg p-4 mb-4 dialog-enter">
+                            嘿兄弟，今天又带了什么"好东西"来？
+                        </div>
+                    </div>
+
+                    <div id="customer-info" class="mb-4 p-3 bg-gray-700 rounded-lg">
+                        <h3 class="font-bold text-yellow-300">当前客户: <span id="customer-type">随机路人</span></h3>
+                        <div class="text-sm text-gray-300">砍价几率: <span id="bargain-chance">30%</span></div>
+                    </div>
+                </div>
+
+                <div class="mt-auto pt-4 border-t border-gray-700">
+                    <button id="find-customer-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg transition">
+                        <i class="fas fa-user-friends mr-2"></i> 寻找新客户 (花费: 50现金)
+                    </button>
+                </div>
+            </div>
+
+            <!-- 游戏日志 -->
+            <div class="bg-gray-800 rounded-xl p-6 shadow-lg">
+                <h2 class="text-2xl font-bold text-yellow-300 mb-4 border-b border-yellow-600 pb-2">犯罪记录</h2>
+                <div id="game-log" class="h-64 overflow-y-auto space-y-2 pr-2">
+                    <div class="text-gray-400 text-sm">游戏开始！马克正在等待你的赃物...</div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // 游戏状态
+        const gameState = {
+            cash: 1000,
+            streetCred: 20,
+            inventory: [],
+            currentCustomer: null,
+            itemTypes: [
+                { id: 1, name: 'iPhone 12', basePrice: 500, rarity: 'common', icon: 'mobile', condition: '轻微划痕' },
+                { id: 2, name: '三星 Galaxy S21', basePrice: 450, rarity: 'common', icon: 'mobile', condition: '屏幕碎裂' },
+                { id: 3, name: '华为 P40', basePrice: 400, rarity: 'common', icon: 'mobile', condition: '密码锁定' },
+                { id: 4, name: 'iPad Pro', basePrice: 800, rarity: 'uncommon', icon: 'tablet', condition: '未激活' },
+                { id: 5, name: 'MacBook Air', basePrice: 1200, rarity: 'rare', icon: 'laptop', condition: '追踪中' },
+                { id: 6, name: '三星 Galaxy S23', basePrice: 200, rarity: 'uncommon', icon: 'mobile', condition: '轻微划痕' },
+				{ id: 7, name: 'MacBook Pro', basePrice: 200, rarity: 'uncommon', icon: 'laptop', condition: '有账号' },
+                { id: 8, name: 'Airpods Pro', basePrice: 200, rarity: 'uncommon', icon: 'headphones', condition: '轻微划痕' },
+                { id: 9, name: 'Google Pixel 6', basePrice: 300, rarity: 'common', icon: 'mobile', condition: '屏幕碎裂' },
+                { id: 10, name: 'OnePlus 9', basePrice: 350, rarity: 'common', icon: 'mobile', condition: '密码锁定' },
+                { id: 11, name: 'iPhone 13 Pro', basePrice: 700, rarity: 'rare', icon: 'mobile', condition: '未激活' },
+                { id: 12, name: 'Surface Pro 7', basePrice: 900, rarity: 'rare', icon: 'laptop', condition: '追踪中' },
+                { id: 13, name: 'Sony WH-1000XM4', basePrice: 250, rarity: 'uncommon', icon: 'headphones', condition: '轻微划痕' }
+            ],
+            customerTypes: [
+                { 
+                    type: '学生', 
+                    dialog: ["这手机能便宜点吗？", "我只有这么多钱...", "这真的是正品吗？"], 
+                    bargainChance: 0.8,
+                    bargainFactor: 0.6 
+                },
+                { 
+                    type: '商人', 
+                    dialog: ["这批货我全要了", "我需要更低的价钱", "来源可靠吗？"], 
+                    bargainChance: 0.5,
+                    bargainFactor: 0.8 
+                },
+                { 
+                    type: '收藏家', 
+                    dialog: ["稀有机型我出高价", "保存状态如何？", "这在我的收藏里很特别","好极了！"], 
+                    bargainChance: 0.3,
+                    bargainFactor: 1.2 
+                },
+                { 
+                    type: '警察', 
+                    dialog: ["这些手机有发票吗？", "看起来像是赃物", "我需要检查一下","你有些可疑"], 
+                    bargainChance: 0.5,
+                    bargainFactor: 0.5,
+                    danger: true
+                }
+            ]
+        };
+
+        // 初始化游戏
+        function initGame() {
+            // 给玩家初始物品
+            for (let i = 0; i < 3; i++) {
+                addRandomItemToInventory();
+            }
+            
+            // 生成第一个客户
+            generateNewCustomer();
+            
+            // 更新UI
+            updateUI();
+            
+            // 设置事件监听器
+            document.getElementById('find-customer-btn').addEventListener('click', generateNewCustomer);
+            document.getElementById('steal-btn').addEventListener('click', stealItems);
+        }
+
+        // 偷取物品
+        function stealItems() {
+            // 随机1-3个物品
+            const count = 1 + Math.floor(Math.random() * 3);
+            
+            // 10%几率被警察抓到
+            if (Math.random() < 0.1) {
+                const fine = Math.floor(gameState.cash * 0.2);
+                gameState.cash = Math.max(0, gameState.cash - fine);
+                gameState.streetCred = Math.max(0, gameState.streetCred - 5);
+                addLogMessage(`🚨 你在偷手机时被警察抓住了！罚款$${fine}并扣减5点信誉！`);
+            } else {
+                for (let i = 0; i < count; i++) {
+                    addRandomItemToInventory();
+                }
+                addLogMessage(`你成功从地铁站偷到了${count}部手机！`);
+                
+                // 增加街头信誉
+                gameState.streetCred = Math.min(100, gameState.streetCred + 1);
+            }
+            
+            updateUI();
+            renderPlayerInventory();
+        }
+
+        // 添加随机物品到玩家库存
+        function addRandomItemToInventory() {
+            const randomType = gameState.itemTypes[Math.floor(Math.random() * gameState.itemTypes.length)];
+            const item = {
+                ...randomType,
+                id: Date.now() + Math.floor(Math.random() * 1000),
+                price: calculateItemPrice(randomType)
+            };
+            gameState.inventory.push(item);
+            renderPlayerInventory();
+        }
+
+        // 计算物品价格
+        function calculateItemPrice(item) {
+            const credModifier = 1 + (gameState.streetCred / 100);
+            const rarityModifier = {
+                common: 1,
+                uncommon: 1.3,
+                rare: 1.7
+            }[item.rarity];
+            
+            return Math.floor(item.basePrice * credModifier * rarityModifier * (0.8 + Math.random() * 0.4));
+        }
+
+        // 生成新客户
+        function generateNewCustomer() {
+            if (gameState.cash < 50) {
+                addLogMessage("你没有足够的现金寻找新客户！");
+                return;
+            }
+            
+            gameState.cash -= 50;
+            gameState.currentCustomer = gameState.customerTypes[Math.floor(Math.random() * gameState.customerTypes.length)];
+            
+            // 更新客户信息显示
+            document.getElementById('customer-type').textContent = gameState.currentCustomer.type;
+            document.getElementById('bargain-chance').textContent = `${Math.floor(gameState.currentCustomer.bargainChance * 100)}%`;
+            
+            // 更新NPC对话
+            updateCustomerDialog();
+            
+            addLogMessage(`你找到了一个新客户：${gameState.currentCustomer.type}！(-50现金)`);
+            if (gameState.currentCustomer.danger) {
+                addLogMessage("⚠️ 警告：这个客户可能是警察！交易需谨慎！");
+            }
+            
+            updateUI();
+        }
+
+        // 更新客户对话
+        function updateCustomerDialog() {
+            const dialogs = gameState.currentCustomer.dialog;
+            document.getElementById('npc-dialog').textContent = 
+                dialogs[Math.floor(Math.random() * dialogs.length)];
+        }
+
+        // 向客户出售物品
+        function sellToCustomer(itemId) {
+            const itemIndex = gameState.inventory.findIndex(item => item.id === itemId);
+            if (itemIndex === -1) return;
+            
+            const item = gameState.inventory[itemIndex];
+            let finalPrice = item.price;
+            
+            // 客户砍价逻辑
+            if (Math.random() < gameState.currentCustomer.bargainChance) {
+                const bargainPrice = Math.floor(item.price * gameState.currentCustomer.bargainFactor);
+                finalPrice = bargainPrice;
+                addLogMessage(`客户砍价！从$${item.price}砍到$${finalPrice}`);
+            }
+            
+            // 从库存移除
+            gameState.inventory.splice(itemIndex, 1);
+            
+            // 增加现金
+            gameState.cash += finalPrice;
+            
+            // 影响街头信誉
+            const credChange = Math.floor(Math.random() * 5) - (gameState.currentCustomer.danger ? 5 : 1);
+            gameState.streetCred = Math.max(0, Math.min(100, gameState.streetCred + credChange));
+            
+            // 警察逮捕逻辑
+            if (gameState.currentCustomer.danger && Math.random() < 0.3) {
+                const fine = Math.floor(gameState.cash * 0.3);
+                gameState.cash = Math.max(0, gameState.cash - fine);
+                addLogMessage(`🚨 你被警察逮捕了！罚款$${fine}并没收货物！`);
+            }
+            
+            // 更新客户对话
+            updateCustomerDialog();
+            
+            // 添加日志
+            addLogMessage(`你卖出了${item.name}(${item.condition})，获得$${finalPrice}！${credChange > 0 ? `(+${credChange}信誉)` : credChange < 0 ? `(${credChange}信誉)` : ''}`);
+            
+            // 更新UI
+            updateUI();
+            renderPlayerInventory();
+        }
+
+        // 添加日志消息
+        function addLogMessage(message) {
+            const logElement = document.getElementById('game-log');
+            const messageElement = document.createElement('div');
+            messageElement.className = 'text-gray-300';
+            messageElement.innerHTML = `<span class="text-gray-500">[${new Date().toLocaleTimeString()}]</span> ${message}`;
+            logElement.appendChild(messageElement);
+            logElement.scrollTop = logElement.scrollHeight;
+        }
+
+        // 渲染玩家库存
+        function renderPlayerInventory() {
+            const inventoryElement = document.getElementById('player-inventory');
+            inventoryElement.innerHTML = '';
+            
+            if (gameState.inventory.length === 0) {
+                inventoryElement.innerHTML = '<div class="col-span-2 text-center text-gray-400 py-4">你的库存空空如也</div>';
+                return;
+            }
+            
+            gameState.inventory.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'bg-gray-700 rounded-lg p-3 flex flex-col item-hover transition cursor-pointer';
+                itemElement.innerHTML = `
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-${item.icon} text-${getRarityColor(item.rarity)}-400 mr-2"></i>
+                        <span class="font-bold">${item.name}</span>
+                    </div>
+                    <div class="text-sm text-gray-300 mb-1">状态: ${item.condition}</div>
+                    <div class="text-xs text-gray-400 mb-2">稀有度: <span class="text-${getRarityColor(item.rarity)}-300">${getRarityName(item.rarity)}</span></div>
+                    <div class="mt-auto flex justify-between items-center">
+                        <span class="text-yellow-300 font-bold">$${item.price}</span>
+                        <button class="bg-green-600 hover:bg-green-700 text-white px-2 py-1 rounded text-sm sell-btn" data-id="${item.id}">
+                            <i class="fas fa-hand-holding-usd mr-1"></i> 出售
+                        </button>
+                    </div>
+                `;
+                inventoryElement.appendChild(itemElement);
+            });
+            
+            // 添加出售按钮事件
+            document.querySelectorAll('.sell-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    sellToCustomer(parseInt(btn.dataset.id));
+                });
+            });
+        }
+
+        // 获取稀有度颜色
+        function getRarityColor(rarity) {
+            const colors = {
+                common: 'gray',
+                uncommon: 'green',
+                rare: 'blue'
+            };
+            return colors[rarity] || 'gray';
+        }
+
+        // 获取稀有度名称
+        function getRarityName(rarity) {
+            const names = {
+                common: '普通',
+                uncommon: '稀有',
+                rare: '罕见'
+            };
+            return names[rarity] || '普通';
+        }
+
+        // 更新UI
+        function updateUI() {
+            document.getElementById('cash').textContent = gameState.cash;
+            document.getElementById('street-cred').textContent = gameState.streetCred;
+            
+            // 根据声誉改变声誉显示颜色
+            const credElement = document.getElementById('street-cred');
+            credElement.className = 'font-bold ' + (
+                gameState.streetCred >= 75 ? 'text-green-400' : 
+                gameState.streetCred >= 50 ? 'text-blue-400' :
+                gameState.streetCred >= 25 ? 'text-yellow-400' : 'text-red-400'
+            );
+            
+            // 禁用刷新按钮如果现金不足
+            document.getElementById('find-customer-btn').disabled = gameState.cash < 50;
+        }
+
+        // 初始化游戏
+        window.onload = initGame;
+    </script>
+</body>
+</html>

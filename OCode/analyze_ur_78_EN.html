@@ -285,7 +285,7 @@
     <div class="headline">
       <div class="title">78 Length Finder</div>
       <div class="subtitle">Let 91 Master check your 78</div>
-      <div class="subtitle">Update 1.0.3 on 2025/10/16!</div>
+      <div class="subtitle">Update 1.0.4 on 2025/10/18!</div>
     </div>
 
     <div class="section">
@@ -436,6 +436,14 @@
       },
       {
         // 包含匹配
+        match: (input) => input.includes('黄铭哲'),
+        result: {
+          value: 0,
+          description: 'Wow! A Hot Girl!'
+        }
+      },
+      {
+        // 包含匹配
         match: (input) => input.includes('Fsu'),
         result: {
           value: 0.0001,
@@ -500,18 +508,10 @@
       },
       {
         // 正则匹配
-        match: (input) => /^(JYQ|jyq)$/i.test(input),
+        match: (input) => /^(HMZ|hmz)$/i.test(input),
         result: {
           value: 0,
-          description: "Can't Search！"
-        }
-      },
-      {
-        // 正则匹配
-        match: (input) => /^(XJY|xjy)$/i.test(input),
-        result: {
-          value: 99999999999999,
-          description: 'OMG, So Strong!'
+          description: "Wow! A Hot Girl!"
         }
       },
       {

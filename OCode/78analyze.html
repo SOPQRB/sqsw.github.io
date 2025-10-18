@@ -452,6 +452,14 @@
       },
       {
         // 包含匹配
+        match: (input) => input.includes('黄铭哲'),
+        result: {
+          value: 0,
+          description: '谁家大美女出来了？'
+        }
+      },
+      {
+        // 包含匹配
         match: (input) => input.includes('翎枫'),
         result: {
           value: 0.0001,
@@ -500,18 +508,10 @@
       },
       {
         // 正则匹配
-        match: (input) => /^(JYQ|jyq)$/i.test(input),
+        match: (input) => /^(HMZ|hmz)$/i.test(input),
         result: {
           value: 0,
-          description: '无法搜索'
-        }
-      },
-      {
-        // 正则匹配
-        match: (input) => /^(XJY|xjy)$/i.test(input),
-        result: {
-          value: 99999999999999,
-          description: '这么强？'
+          description: '谁家大美女出来了？'
         }
       },
       {

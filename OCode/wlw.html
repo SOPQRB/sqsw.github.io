@@ -306,7 +306,7 @@
           名字：<span id="userName"></span>
         </div>
         <div class="result-big" id="result">——</div>
-        <div class="result-sub" id="resultSub">Ta 可能喜欢的人：</div>
+        <div class="result-sub" id="resultSub">Ta 可能喜欢的人</div>
       </div>
 
       <div class="soft-box">
@@ -404,12 +404,12 @@
           const targetName = targets[idx];
           const desc = specialDesc || descriptions[targetName] || '';
           descriptionElement.textContent = desc;
-          resultSub.textContent = 'Ta 可能喜欢的人：';
+          resultSub.textContent = 'Ta 可能喜欢的人';
           resultText.textContent = targetName;
           if (!resultCard.classList.contains('show')) resultCard.classList.add('show');
         } catch (e) {
           console.error('analyzeText error', e);
-          alert('发生错误，请查看控制台：' + e);
+          alert('发生错误，联系_Menf_。。。' + e);
         }
       };
 

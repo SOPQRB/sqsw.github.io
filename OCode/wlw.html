@@ -263,9 +263,11 @@
       <!-- 几把撸炸了！抄袭死妈哦~ www.pinkoc.top -->
       <div class="title">谁喜欢谁</div>
       <!-- 几把撸炸了！抄袭死妈哦~ www.pinkoc.top -->
-      <div class="subtitle">输入名字获取对方可能喜欢的人🤫🤫🤫</div><!-- 几把撸炸了！抄袭死妈哦~ www.pinkoc.top -->
+      <div class="subtitle">输入名字获取对方的暗恋对象🤫🤫🤫仅供娱乐使用</div><!-- 几把撸炸了！抄袭死妈哦~ www.pinkoc.top -->
       <!-- 几把撸炸了！抄袭死妈哦~ www.pinkoc.top -->
       <div class="subtitle">_Menf_ 原创</div><!-- 几把撸炸了！抄袭死妈哦~ www.pinkoc.top -->
+      <!-- 几把撸炸了！抄袭死妈哦~ www.pinkoc.top -->
+      <div class="subtitle">1.0.1 已在 25.10.19更新!</div>
       <!-- 几把撸炸了！抄袭死妈哦~ www.pinkoc.top -->
     </div><!-- 几把撸炸了！抄袭死妈哦~ www.pinkoc.top -->
 <!-- 几把撸炸了！抄袭死妈哦~ www.pinkoc.top -->
@@ -305,18 +307,22 @@
 <!-- 几把撸炸了！抄袭死妈哦~ www.pinkoc.top -->
 
 <script>// 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
-    const targets = ['良子', 'ZYY大美女', '奶龙', '东北雨姐', '旺仔小乔', '胖猫', 'LZC御姐系', '无'];// 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
+    const targets = ['良子', '曾严宇', '奶龙', '东北雨姐', '旺仔小乔', '胖猫', '林子城', '无', '黄铭哲', '郑翊鸿', '方言', '官雨晴'];// 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
     // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
 
     const descriptions = { // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
       '良子': '体型纤细如木棍。', // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
-      'ZYY大美女': '外向活泼，聊天有趣。', // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
+      '曾严宇': '外向活泼，聊天有趣。', // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
       '奶龙': '黄桃罐头很好吃呢~', // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
       '东北雨姐': '带派汗脚让人欲罢不能。', // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
       '旺仔小乔': '面具之下是一百万个面具。', // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
       '胖猫': '慵懒可爱，适合撒娇的人。', // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
-      'LZC御姐系': '御姐型，成熟自信。', // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
-      '无': '暂时没有喜欢的人。' // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
+      '林子城': '御姐型，成熟自信。', // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
+      '无': '暂时没有喜欢的人。', // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
+      '黄铭哲': '谁家大美女出来了？', // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
+      '郑翊鸿': '鸡巴玩意。', // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
+      '方言': '叫主人😡😡😡', // www.pinkoc.top
+      '官雨晴': '666你是gay吧😨😨😨' // www.pinkoc.top
     }; // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
     // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
 
@@ -325,7 +331,21 @@
       { match: (input) => input === 'LIEYANBANG' || input === '烈焰棒', result: { target: '良子', description: '傻逼。' } }, // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
       { match: (input) => input.includes('Sensei'), result: { target: 'ZYY大美女', description: 'Bitch!' } }, // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
       { match: (input) => input === '我', result: { target: '无', description: '你是谁？' } }, // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top 
-      { match: (input) => input.includes('114514'), result: { target: '胖猫', description: 'Homo(悲)' } } // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
+      { match: (input) => input.includes('114514'), result: { target: '胖猫', description: 'Homo(悲)' } }, // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
+      { match: (input) => input.includes('wsq'), result: { target: '无', description: 'Holy Shit' } }, // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
+      { match: (input) => input.includes('WSQ'), result: { target: '无', description: 'Holy Shit' } }, // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
+      { match: (input) => input.includes('fy'), result: { target: '官雨晴', description: '百年好合' } }, // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
+      { match: (input) => input.includes('FY'), result: { target: '官雨晴', description: '百年好合' } }, // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
+      { match: (input) => input.includes('方言'), result: { target: '官雨晴', description: '百年好合' } }, // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
+      { match: (input) => input.includes('gyq'), result: { target: '方言', description: '百年好合' } }, // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
+      { match: (input) => input.includes('GYQ'), result: { target: '方言', description: '百年好合' } }, // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
+      { match: (input) => input.includes('官雨晴'), result: { target: '方言', description: '百年好合' } }, // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
+      { match: (input) => input.includes('hmz'), result: { target: '官雨晴', description: 'bro Don't know she is a gay' } }, // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
+      { match: (input) => input.includes('HMZ'), result: { target: '官雨晴', description: 'bro Don't know she is a gay' } }, // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
+      { match: (input) => input.includes('黄铭哲'), result: { target: '官雨晴', description: 'bro Don't know she is a gay' } }, // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
+      { match: (input) => input.includes('zyy'), result: { target: '良子', description: 'Gay VS ?' } }, // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
+      { match: (input) => input.includes('ZYY'), result: { target: '良子', description: 'Gay VS ?' } }, // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
+      { match: (input) => input.includes('曾严宇'), result: { target: '良子', description: 'Gay VS ?' } } // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top
     ];
 
     function normalizeText(s) { // 几把撸炸了！抄袭死妈哦~ www.pinkoc.top

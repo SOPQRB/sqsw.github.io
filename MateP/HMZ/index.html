@@ -1,18 +1,255 @@
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>黄铭哲 Wiki</title>
+    <title>Pinkoc - Wiki</title>
     <link rel="icon" href="Pinkoc.ico" type="image/x-icon">
-<a href="https://www.pinkoc.top">返回主界面</a>
-<h1>欢迎来到 "黄铭哲 Wiki"</h1>
-<h3>此网站专门记录 黄铭哲 的"光荣事迹"</h3>
-<h3>UI仍在开发中:> Please understand _Menf_</h3>
-<h4>查看更新日志 : <a href="updatelog.html">点击我查看更新日志</a></h4>
-<h2>--查看光荣事迹--</h2>
-<!DOCTYPE html>
-<head>
-    <a href="hmzlovegyq.html">黄铭哲 暗恋 官雨晴？</a><br>
-    <a href="hmzsexybody.html">“裸照”</a><br>
-    <a href="friendpng.html">朋友圈公开 ≠ 私密</a><br>
-    <a href="hmzsister.html">"我姐姐老公任嘉伦"</a>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Candara, 'Segoe UI', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, 'Cascadia Code';
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #2a4d69, #4b86b4);
+            background-attachment: fixed;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 800px;
+            background: rgba(10, 20, 50, 0.85);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            margin: 20px auto;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            width: 64px;
+            height: 64px;
+            margin-right: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .logo h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(to right, #ff0008, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(255, 0, 0, 0.3);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li a:hover, nav ul li a.active {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        .wiki-container {
+            padding: 80px 0;
+        }
+        
+        .wiki-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .wiki-header h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #ffffff;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .wiki-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .wiki-content {
+            background: rgba(30, 30, 46, 0.7);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .wiki-section {
+            margin-bottom: 40px;
+        }
+        
+        .wiki-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #fad0c4;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+        }
+        
+        .wiki-section h4 {
+            font-size: 1.4rem;
+            margin: 25px 0 15px;
+            color: #ffffff;
+        }
+
+        .wiki-section a {
+            color: #ffc2c2;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .wiki-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .wiki-link {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: #ffffff;
+            display: block;
+        }
+        
+        .wiki-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+        
+        .wiki-link i {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #fad0c4;
+        }
+        
+        .wiki-link h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .wiki-link p {
+            font-size: 0.9rem;
+            color: #cccccc;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            color: #1a1a2e;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            margin-top: 30px;
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            border-top: 2px solid rgba(255, 255, 255, 0.1);
+            margin-top: 50px;
+            color: #cccccc;
+        }
+    </style>
+</head>
+       <body>
+        <div class="main-container">
+        <div class="wiki-container">
+            <div class="wiki-header">
+                <h2>黄铭哲 Wiki</h2>
+                <p>探索黄铭哲的裸照和家族乐子史</p>
+            </div>
+            
+            <div class="wiki-content">
+                <div class="wiki-section">
+                    <h3>探索黄铭哲の家族乐子史</h3>
+                    <h4>更新日志: <a href="updatelog.html">点击查看😋😋😋</a></h4>
+                </div>
+                
+                <div class="wiki-section">
+                              <a href="hmzlovegyq.html">黄铭哲 暗恋 官雨晴？</a><br>
+                              <a href="hmzsexybody.html">“裸照”</a><br>
+                              <a href="friendpng.html">朋友圈公开 ≠ 私密</a><br>
+                              <a href="hmzsister.html">"我姐姐老公任嘉伦"</a>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="wiki-section">
+                    <h3>About this Wiki</h3>
+                    <p>Fuck you 黄铭哲！</p>
+                    <p>入坑死装哥或老手进阶死装技巧？来这里，只要看3个页面即可让你从无糖变成唐太宗！</p>
+                    <p>传说_Menf_每写一个乐子分支都要打50针胰岛素，如果不打就会糖分超标从而变成黄铭哲的亲传弟子。</p>
+                </div>
+                
+                <a href="https://www.pinkoc.top" class="back-btn">返回主界面</a>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>

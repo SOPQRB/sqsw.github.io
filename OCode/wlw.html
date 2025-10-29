@@ -349,7 +349,10 @@
         { match: (input) => input.includes('fy') || input.includes('FY') || input.includes('方言'), result: { target: '官雨晴', description: '百年好合' } },
         { match: (input) => input.includes('gyq') || input.includes('GYQ') || input.includes('官雨晴'),result: { target: '方言', description: '百年好合' } },
         { match: (input) => input.includes('hmz') || input.includes('HMZ') || input.includes('黄铭哲'), result: { target: '官雨晴', description: "bro Don't know she is a gay" } },
-        { match: (input) => input.toLowerCase().includes('zyy'), result: { target: '良子', description: 'Gay VS ?' } }
+        { match: (input) => input.includes('zyy') || input.includes('ZYY') || input.includes('曾严宇'), result: { target: '旺仔小乔', description: "。" } },
+        { match: (input) => input.includes('zyh') || input.includes('ZYH') || input.includes('郑翊鸿'), result: { target: '曾严宇', description: "百年好合" } },
+        { match: (input) => input.includes('ccr') || input.includes('CCR') || input.includes('蔡辰睿'), result: { target: '无', description: "。" } },
+        { match: (input) => input.includes('jyq') || input.includes('JYQ') || input.includes('江以晴'), result: { target: '无', description: "。" } }
       ];
 
       function normalizeText(s) { if (typeof s !== 'string') s = String(s || ''); return s.replace(/\r\n/g,'\n').replace(/\r/g,'\n').trim(); }
